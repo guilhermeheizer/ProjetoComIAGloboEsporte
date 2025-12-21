@@ -1,4 +1,4 @@
-# ProjetoComIAGloboEsporte
+# Projeto com IA Globo Esporte
 Extração das rodadas e dos jogos da Tabela Brasileirão Série A ou B com ChatGPT
 
 Há algum tempo penso em montar uma tabela do Brasileirão, no estilo do Globo Esporte, e no decorrer das rodadas, à medida que os jogos vão acontecendo e os gols marcados, vou inputando os gols e a tabela de classificação atualiza.
