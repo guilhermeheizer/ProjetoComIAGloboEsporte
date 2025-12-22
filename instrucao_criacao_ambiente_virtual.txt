@@ -55,4 +55,6 @@ Passo 7: Configuração do VSCode para reconhecer o ambiente virtual
 4.	Caso não veja o ambiente virtual listado, clique em Enter interpreter path > Find e busque pelo interpretador manualmente:
 o	Caminho: C:\PythonMeusProjetos\ProjetoComIAGloboEsporte\venv\Scripts\python.exe.
 Agora o VSCode usará o ambiente virtual para rodar e depurar o projeto.
+
+Observação: Caso o ambiente virtual já tenha sido criado anteriormente, digite: .\venv\Scripts\activate
 ________________________________________

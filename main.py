@@ -16,8 +16,9 @@ class CampeonatoBrasileiroScraper:
         self.tabela_brasileirao = {}
         self.time_escudo = {}
 
-    def navegar_para_site(self, url="https://ge.globo.com/futebol/brasileirao-serie-b/?_ga=2.112892996.1193706931.1766090285-883144322.1718917913"):
+    def navegar_para_site(self, url="https://ge.globo.com/futebol/brasileirao-serie-a/"):
                           # url="https://ge.globo.com/futebol/brasileirao-serie-a/"):
+                        #"https://ge.globo.com/futebol/brasileirao-serie-b/?_ga=2.112892996.1193706931.1766090285-883144322.1718917913"):
         """Navega para o site do Campeonato Brasileiro."""
         self.driver.get(url)
         time.sleep(5)  # Aguarda a página carregar completamente
@@ -131,11 +132,11 @@ class CampeonatoBrasileiroScraper:
         # print(self.time_escudo)
         # Gera o HTML
 
-        tabela_brasileirao_ordenada = {
-    rodada: jogos for rodada, jogos in sorted(self.tabela_brasileirao.items(), key=lambda item: int(item[0]))
-}
+        tabela_brasileirao_ordenada = dict(sorted(self.tabela_brasileirao.items(), key=lambda item: int(item[0])))
         html = gerar_tabela_html(tabela_brasileirao_ordenada, self.time_escudo)
-
+#         tabela_brasileirao_ordenada = {
+#     rodada: jogos for rodada, jogos in sorted(self.tabela_brasileirao.items(), key=lambda item: int(item[0]))
+# }
         # Salva o HTML em um arquivo
         with open("tabela_brasileirao.html", "w", encoding="utf-8") as arquivo:
             arquivo.write(html)
