@@ -1,0 +1,58 @@
+Guia passo-a-passo gerado pelo ChatGPT, detalhado, para criar um projeto Python chamado ProjetoComIAGloboEsporte no Visual Studio Code (VSCode), 
+com um ambiente virtual configurado para as bibliotecas necessárias (Selenium, webdriver_manager.chrome e time).
+________________________________________
+Passo 1: Criação do projeto no Windows
+1.	Abra o Explorador de Arquivos e navegue até o local onde você deseja armazenar o projeto (exemplo: D:\PythonMeusProjetos).
+2.	Crie uma pasta com o nome do projeto, como ProjetoComIAGloboEsporte.
+________________________________________
+Passo 2: Abrir o VSCode no diretório do projeto
+1.	Abra o VSCode.
+2.	Clique em File > Open Folder (ou Arquivo > Abrir Pasta) e selecione a pasta ProjetoComIAGloboEsporte.
+3.	Espere o VSCode abrir o projeto.
+________________________________________
+Passo 3: Instalar o Python e configurar o terminal
+1.	Certifique-se de que você tem o Python instalado no sistema. Teste isso rodando o comando no terminal:
+2.	python --version
+O Python precisa estar na versão 3.8 ou superior. Caso não esteja instalado:
+o	Baixe no site oficial: https://www.python.org/.
+o	Ao instalar, marque a opção Add Python to PATH.
+3.	No VSCode, abra o terminal embutido:
+o	No menu, clique em View > Terminal (ou Exibir > Terminal).
+o	O terminal será aberto na pasta do projeto.
+________________________________________
+Passo 4: Criar o ambiente virtual
+Com o terminal aberto no diretório do projeto (ProjetoComIAGloboEsporte), crie o ambiente virtual usando o comando:
+python -m venv venv
+Aqui, o venv é o nome do ambiente virtual que será criado (pasta dentro do projeto).
+Nota: Se o comando resultar em erro, o Python pode não estar no PATH. Tente o comando abaixo dependendo de seu sistema:
+py -m venv venv
+________________________________________
+Passo 5: Ativar o ambiente virtual
+Após criar o ambiente virtual, ative-o com os seguintes comandos, dependendo do sistema operacional:
+•	No Windows:
+•	venv\Scripts\activate
+•	No Linux/Mac:
+•	source venv/bin/activate
+Você verá que o nome do ambiente virtual será exibido no início da linha do terminal, algo como:
+(venv) C:\PythonMeusProjetos\ProjetoComIAGloboEsporte>
+________________________________________
+Passo 6: Instalar as bibliotecas necessárias
+Com o ambiente virtual ativado, instale as bibliotecas que você deseja usar. No caso, você precisará das seguintes:
+1.	Selenium: Para acessar e manipular o navegador.
+2.	webdriver_manager: Para gerenciar automaticamente os drivers do navegador, como o ChromeDriver.
+3.	Outras bibliotecas nativas do Python como time serão automaticamente incluídas.
+No terminal, rode os seguintes comandos:
+pip install selenium
+pip install webdriver_manager
+Verifique se as bibliotecas foram instaladas corretamente:
+pip list
+As entradas como selenium e webdriver_manager devem aparecer.
+________________________________________
+Passo 7: Configuração do VSCode para reconhecer o ambiente virtual
+1.	Clique no canto inferior direito do VSCode, onde deve aparecer algo como Python: <alguma versão>.
+2.	Um menu será exibido. Selecione o interpretador que corresponde ao ambiente virtual:
+3.	[Python] .\venv\Scripts\python.exe
+4.	Caso não veja o ambiente virtual listado, clique em Enter interpreter path > Find e busque pelo interpretador manualmente:
+o	Caminho: C:\PythonMeusProjetos\ProjetoComIAGloboEsporte\venv\Scripts\python.exe.
+Agora o VSCode usará o ambiente virtual para rodar e depurar o projeto.
+________________________________________

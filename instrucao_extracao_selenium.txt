@@ -1,0 +1,162 @@
+Construir um programa Python.
+
+Vamos utilizar para o programa Python a biblioteca Selenuim para realizar a extração de dados da tabelas do Campeonato Brasileiro de 2025 de todas as rodadas e de todos os jogos.
+O site será https://ge.globo.com/futebol/brasileirao-serie-a/ e vamos utilizar o Google Chrome, portanto explicar se é necessário instalar drive para o Chrome.
+
+Vamos extrair os seguintes dados, que da <ul class="lista-jogos">, que contém 10 tag por rodada <lista-jogos__jogo>, por definição: 'li' é uma tag HTML que representa um item de lista
+
+- Número da rodada: se encontra na tag <lista-jogos__navegacao--rodada>, com as strings "1" "ª RODADA", pegar a 1a string
+- Data
+- Dia da semana
+- Horário
+- Time mandante: se encontra na tag <placar__equipes placar__equipes--mandante>, pegar <meta itemprop="name" content="Fluminense">
+- Placar do jogo
+- Time visitante
+
+Para cada Este padrão se repete para cada rodada e em cada rodada temos 10 jogos.
+
+---
+
+O site será https://ge.globo.com/futebol/brasileirao-serie-a/ e vamos utilizar o Google Chrome, portanto explicar se é necessário instalar drive para o Chrome.
+
+---
+Solicitar um input: "Carregar as rodadas crescente ou descrecente (C ou D):", a string que vai receber dar o nome de crescente_decrescente e usar .upper()
+Esta string vai determinar se vai percorrer as rodadas na ordem crescente ou decrescente.
+
+Lógica para procurar as tag.
+1 - Ao carregar o site posicionar na tag que indica da rodada: <span class="" https:="" s.sde.globo.com="" media="" organizations="" 2018="" 03="" 11="" fluminense.svg"="">3ª RODADA</span>
+    Obter a primeira string que é a rodada, que será a chave do dicionário tabela_brasileirao.
+
+2 - A função principal de carga das rodadas vai ser num loop. Se a rodada que foi carregado no item (1) for igual a 1, então, o loop será do 1 ao 38, 
+    se for 10 o loop será de 10 a 38 caso crescente_decrescente for igual a C e 10 para 1 caso crescente_decrescente for igual a D.
+	
+	A página html carrega na rodada default do site, se o Brasileirão não iniciou, a rodada que carrega é a de número 1, se tiver na rodada 15 é esta que carrega com default.
+	
+	Montar a seguite lógica no loop com while true.
+	
+    2.1 - Vamos percorrer os 10 jogos da rodada
+          - O dicionário time_escudo vai ser carregado somente uma vez, ou seja, se a rodada tivermos um lopp de 1 a 38 ou 30 a 38, carregar no laço 1. 
+			
+		  - Os 10 jogos da rodada estão contidos em <ul class="lista-jogos"> e cada um dos 10 jogos esta contido <li class="lista-jogos__jogo">, 
+            usar XPath, você pode organizar o mesmo código com seletores XPath para localizar diretamente os elementos:
+			
+		    divs_info = driver.find_elements(By.XPATH, '//div[@class="lista-jogos__jogo"]')
+			
+			Fazer um for para pegar todos os elementos, e gravamos no dicionário:
+			
+			for index, div in enumerate(divs_info):
+				print(f"\n==== Informações do jogo {index + 1} ====")
+
+				Exemplo: # Localizando os elementos filhos pelo caminho
+				local = div.find_element(By.XPATH, './/span[@class="jogo__informacoes--local"]').text.strip()
+				data = div.find_elements(By.XPATH, './/span[@class="jogo__informacoes--data"]')
+				hora = div.find_element(By.XPATH, './/span[@class="jogo__informacoes--hora"]').text.strip()
+			
+			    No dicionário tabela_brasileirao montar o conteúdo das tag, e alguns dos conteúdo podem estar nulos e gravar nulo no dicionário:
+				- "local" = tag <span class="jogo__informacoes--local"> 
+				- "data" = tag <span class="jogo__informacoes--data">11/02</span>
+				- "hora" = tag <span class="jogo__informacoes--hora"></span>
+				- "placar_time_mandate" = <div class="placar-box"><span class="placar-box__valor placar-box__valor--mandante"></span>
+				
+				Dentro da tag <div class="placar__equipes placar__equipes--mandante" itemprop="performer" itemscope="" itemtype="http://schema.org/SportsTeam">
+				estão as tags abaixo:
+                - "time_mandante_sigla" = tag <span class="equipes__sigla" title="Fluminense">FLU</span>
+				- "time_mandante_nome"  = tag <span class="equipes__nome">Fluminense</span>
+				
+				Dentro da tag <div class="placar__equipes placar__equipes--visitante" itemprop="performer" itemscope="" itemtype="http://schema.org/SportsTeam">
+				estão as tags abaixo:
+				- "time_visitante_sigla" = tag <span class="equipes__sigla" title="Grêmio">GRE</span>
+				- "time_visitante_nome"  = tag <span class="equipes__nome">Grêmio</span>
+				  
+				Neste dicionário fazer somente para um laço da rodada:
+				- No dicionário time_escudo, fazer um append:
+				  - "sigla" = time_mandante_sigla
+				  - "link_escudo" = tag <img class="equipes__escudo equipes__escudo--mandante" itemprop="image" src="https://s.sde.globo.com/media/organizations/2018/03/11/fluminense.svg" width="30" height="30" title="Fluminense" pinger-seen="true"></div>
+		  
+		        No dicionário time_escudo, fazer outro append:
+				- "sigla" = "time_visitante_sigla"
+				- "link_escudo" = tag <img class="equipes__escudo equipes__escudo--visitante" itemprop="image" src="https://s.sde.globo.com/media/organizations/2021/02/13/cruzeiro_2021.svg" width="30" height="30" title="Cruzeiro" pinger-seen="true">
+				
+		  - Para finalizar ou continuar o loop, fazer o "if" abaixo:
+		    - Se crescente_decrescente == "C" and rodada == "38":
+			     break # finalizar o loop
+			  elif Se crescente_decrescente == "D" and rodada == "1":
+			       break #finalizar o loop
+		      else:
+			       chama função navega_rodada (self, crescente_decrescente) # vide detalhes da lógica no item 3.
+				   
+				   
+3 - Função navega_rodada
+    Se crescente_decrescente == "C":
+       Procurar pela tag <span class="lista-jogos__navegacao--setas lista-jogos__navegacao--seta-direita
+    
+    Se crescente_decrescente == "D":
+	   <span class="lista-jogos__navegacao--setas lista-jogos__navegacao--seta-esquerda
+	   
+    fazer um: time.sleep(5)	
+
+---
+
+O programa Python deve salvar os dados extraídos para dois dicionário:
+- Dicionário tabela_brasileirao: onde a chave é o número da rodada e para cada rodada uma lista com 10 jogos e cada jogo um dicionário;
+- Dicionário time_escudo: onde a chave é a sigla do time e link da sigla
+
+Exemplo dos dicionários:
+
+tabela_brasileirao =
+{
+  "1": [
+    {
+	  "local": "Maracanã"
+	  "data": "28/01"
+	  "hora": "19:30"
+	  "time_mandante_sigla": "FLU"
+      "time_mandante_nome": "FLUMINENSE",
+	  "placar_time_mandate": "1"
+	  "time_visitante_sigla": "GRE"
+      "time_visitante_nome": "GRÊMIO",
+	  "placar_time_visitante": "0"
+    },
+    {
+	  "local": "Nilton Santos (Engenhão)"
+	  "data": "28/01"
+	  "hora": ""
+	  "time_mandante_sigla": "BOT"
+      "time_mandante_nome": "BOTAFOGO",
+	  "placar_time_mandate": ""
+	  "time_visitante_sigla": "CRU"
+      "time_visitante_nome": "CRUZEIRO",
+	  "placar_time_visitante": ""
+    }
+  ],
+  "2": [
+    {
+	  "local": "Alianz Parque"
+	  "data": "03/02"
+	  "hora": "20:00"
+	  "time_mandante_sigla": "PAL"
+      "time_mandante_nome": "PALMEIRAS",
+	  "placar_time_mandate": "1"
+	  "time_visitante_sigla": "SAN"
+      "time_visitante_nome": "SANTOS",
+	  "placar_time_visitante": "0"
+    },
+    {
+	  "local": ""
+	  "data": "03/02"
+	  "hora": ""
+	  "time_mandante_sigla": "REM"
+      "time_mandante_nome": "REMO",
+	  "placar_time_mandate": ""
+	  "time_visitante_sigla": "COR"
+      "time_visitante_nome": "CORITIBA",
+	  "placar_time_visitante": ""
+    }
+  ]
+}  
+
+time_escudo = {"sigla": "FLU", "link_escudo": "https://s.sde.globo.com/media/organizations/2018/03/11/fluminense.svg"}
+
+
+Monte um programa Python a ser chamado do main.py para impressão html conforme o anexo (o anexo é um print da tabela do G1 - Globo Esporte).
+Indique a mudança que tenho que fazer no main.py

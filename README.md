@@ -1,23 +1,42 @@
 # Projeto com IA Globo Esporte
 Extração das rodadas e dos jogos da Tabela Brasileirão Série A ou B com ChatGPT
 
-Há algum tempo penso em montar uma tabela do Brasileirão, no estilo do Globo Esporte, e no decorrer das rodadas, à medida que os jogos vão acontecendo e os gols marcados, vou inputando os gols e a tabela de classificação atualiza.
+Para enriquecer o estudo em Python, resolvi criar um programa Python para extrair do site do Globo Esporte a tabela de jogos do Brasileirão da Série A de 2026 e do Brasileirão da Série B de 2025.
 
-Para enriquecer o estudo em Python, resolvi desenvolver um programa em Python para extrair do site do Globo Esporte a tabela de jogos do Brasileirão da Série A de 2026 e do Brasileirão da Série B de 2025.
+Preparei a análise de um programa para extrair dos dados, como explicações detalhadas. Veja o **"instrucao_extracao_selenium.txt"** anexo no repositório do GitHub.
+Esta análise foi a base do **prompt para o ChatGPT gerar o programa Python**, 
 
-Preparei literalmente a definição de um programa para extrair os dados, ou seja, **uma das tarefas do analista de sistemas**: após definidos os processos, define-se o que cada programa irá fazer.
-
-A definição do programa de extração arbodou:
+A análise do programa de extração abordou:
+- A dinâmica do funcionamento site
+- Quais as tags terão os contéudos capturados (
 - Parametros de entrada
 - Qual site do Globo Esporte (url)
 - Como é a lógica para obter os conteúdos de cada tag do site
 - Como navegar de uma rodada para outra, realizando o clique automático na seta de navegação
 - Se vou percorrer as rodadas na ordem crescente ou decrecente a partir da rodada default que é carregada automaticamente
-- E por fim, a saída, defini um JSON dos jogos e outro JSON com o endereço para download dos escudos dos times
-A definição do programa foi submetida ao ChatGPT, solicitando a criação de um programa Python utilizando a biblioteca Selenium. Tal biblioteca é utilizada para acessar sites para extração de dados.
+- A saída, defini dois dicionários: um JSON das rodadas com os jogos e outro JSON com o endereço para download dos escudos dos times
 
- Utilizei o VSCode para executar o programa Python gerado pelo ChatGPT. A lógica do programa foi gerada conforme a minha análise.
+Solicitei ao ChatGPT a geração de outro programa:
+- Uma página html para listar as rodadas e os jogos. Semelhante ao site do Globo Esporte, e que utilizasse o print screen do site: "ExemploTabela.png",
+  os dois diconários da rodadas e dos escudos foram a base da listagem.
 
-Na primeira execução,  o programa cancelou por não encontrar a tag. Fiz a correção do programa porque a leitura de duas das tags estava errada. O ChatGPT considerou a minha análise. 
+A análise do programa foi submetida ao ChatGPT, solicitando a criação do programa Python utilizando a biblioteca Selenium. 
+Tal biblioteca é utilizada para acessar sites para extração de dados. A lógica do programa foi gerada conforme a minha análise.
 
-Após a correção do erro de cancelamento, iniciei os testes, **mais uma das tarefas do analista de sistemas** que deve ser feita após a entrega do programa pelo programador ChatGPT. Fui realizando testes e acertos no programa. Primeiro, testei com a tabela da Série A de 2026 e algumas informações ainda não existem, como o local do jogo, o horário e o placar. Depois, realizei um segundo teste com a tabela da Série B de 2025, que contém as 38 rodadas com seus placares, horários e locais dos jogos. O resultado do teste foi 100% correto na primeira execução.
+Utilizei o VSCode para o projeto "ProjetoComIAGloboEsporte", com ambiente vitual para executar o programa Python gerado pelo ChatGPT.
+Obs: acesse "instrucao_criacao_ambiente_virtual.txt" 
+
+Na primeira execução, o programa cancelou por não encontrar a tag, a minha análise estava com explicação errada. 
+Fiz a correção do programa, a leitura de duas das tags estava errada. O ChatGPT considerou a minha análise. 
+
+Após a correção do erro de cancelamento, realizei uma série de testes e pequenos ajuste no programa. 
+Primeiro, testei com a tabela da Série A de 2026 e algumas informações ainda não existem, como o local do jogo, o horário e o placar. 
+Depois, realizei um segundo teste com a tabela da Série B de 2025, que contém as 38 rodadas com seus placares, horários e locais dos jogos. 
+
+Conclusão:
+
+Achei que o resultado do **Programador ChatGPT** com o Copilot foi supreende, gerou o programa main.py bem feito e com as funções separadas.
+
+O mais importante de tudo foi a realização de testes com as tabelas do Brasileirão da Série A e Série B e conferência dos resultados.
+
+
