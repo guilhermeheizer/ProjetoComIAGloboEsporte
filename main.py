@@ -3,6 +3,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager  # Importação do webdriver-manager
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 import time
 from gerador_html import gerar_tabela_html
 
@@ -16,7 +18,7 @@ class CampeonatoBrasileiroScraper:
         self.tabela_brasileirao = {}
         self.time_escudo = {}
 
-    def navegar_para_site(self, url="https://ge.globo.com/futebol/brasileirao-serie-a/"):
+    def navegar_para_site(self, url="https://ge.globo.com/futebol/brasileirao-serie-b/?_ga=2.112892996.1193706931.1766090285-883144322.1718917913"):
                           # url="https://ge.globo.com/futebol/brasileirao-serie-a/"):
                         #"https://ge.globo.com/futebol/brasileirao-serie-b/?_ga=2.112892996.1193706931.1766090285-883144322.1718917913"):
         """Navega para o site do Campeonato Brasileiro."""
@@ -49,11 +51,13 @@ class CampeonatoBrasileiroScraper:
                 time_visitante_placar = placar_box.find_element(By.XPATH, './/span[contains(@class, "placar-box__valor--visitante")]').text.strip() or "NULO"
 
                 time_mandante = jogo.find_element(By.XPATH, './/div[contains(@class, "placar__equipes--mandante")]')
-                time_mandante_sigla = time_mandante.find_element(By.XPATH, './/span[contains(@class, "equipes__sigla")]').text.strip()
+                time_mandante_html = str(time_mandante.find_element(By.XPATH, './/span[contains(@class, "equipes__sigla")]').get_attribute("outerHTML"))
+                time_mandante_sigla = time_mandante_html.split (">")[1].split("<")[0].strip()
                 time_mandante_nome = time_mandante.find_element(By.XPATH, './meta[@itemprop="name"]').get_attribute("content")
                                                      
                 time_visitante = jogo.find_element(By.XPATH, './/div[contains(@class, "placar__equipes--visitante")]')
-                time_visitante_sigla = time_visitante.find_element(By.XPATH, './/span[contains(@class, "equipes__sigla")]').text.strip()
+                time_visitante_html = str(time_visitante.find_element(By.XPATH, './/span[contains(@class, "equipes__sigla")]').get_attribute("outerHTML"))
+                time_visitante_sigla = time_visitante_html.split (">")[1].split("<")[0].strip()
                 time_visitante_nome = time_visitante.find_element(By.XPATH, './meta[@itemprop="name"]').get_attribute("content")
 
                 # Adiciona o dicionário do jogo à lista da rodada
@@ -71,11 +75,11 @@ class CampeonatoBrasileiroScraper:
 
                 # Adiciona os escudos ao dicionário time_escudo (se ainda não estiverem salvos)
                 if time_mandante_sigla not in self.time_escudo:
-                    escudo_mandante = time_mandante.find_element(By.XPATH, './/img[contains(@class, "equipes__escudo")]').get_attribute("src")
+                    escudo_mandante = time_mandante.find_element(By.XPATH, './/img[contains(@class, "equipes__escudo--mandante")]').get_attribute("src")
                     self.time_escudo[time_mandante_sigla] = escudo_mandante
 
                 if time_visitante_sigla not in self.time_escudo:
-                    escudo_visitante = time_visitante.find_element(By.XPATH, './/img[contains(@class, "equipes__escudo")]').get_attribute("src")
+                    escudo_visitante = time_visitante.find_element(By.XPATH, './/img[contains(@class, "equipes__escudo--visitante")]').get_attribute("src")
                     self.time_escudo[time_visitante_sigla] = escudo_visitante
 
             except Exception as e:
@@ -126,13 +130,14 @@ class CampeonatoBrasileiroScraper:
         self.driver.quit()
 
         # Mostra os resultados
-        # print("Tabela do Campeonato Brasileiro:")
-        # print(self.tabela_brasileirao)
-        # print("\nEscudos dos Times:")
-        # print(self.time_escudo)
+        
+        #print(self.tabela_brasileirao)
+        print("\nEscudos dos Times:")
+        print(self.time_escudo)
         # Gera o HTML
-
+        print("\nTabela do Campeonato Brasileiro:")
         tabela_brasileirao_ordenada = dict(sorted(self.tabela_brasileirao.items(), key=lambda item: int(item[0])))
+        print (tabela_brasileirao_ordenada)
         html = gerar_tabela_html(tabela_brasileirao_ordenada, self.time_escudo)
 #         tabela_brasileirao_ordenada = {
 #     rodada: jogos for rodada, jogos in sorted(self.tabela_brasileirao.items(), key=lambda item: int(item[0]))
