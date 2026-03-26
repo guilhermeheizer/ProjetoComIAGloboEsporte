@@ -2,6 +2,10 @@
 
 $${\color{red}Welcome \space \color{lightblue}To \space \color{orange}Stackoverflow}$$
 
+```ini
+[Esta frase aparecerá em azul no GitHub]
+```
+
 Extração das rodadas e dos jogos da Tabela Brasileirão Série A ou B com ChatGPT
 
 Para enriquecer o estudo em Python, resolvi criar um programa Python para extrair do site do Globo Esporte a tabela de jogos do Brasileirão da Série A de 2026 e do Brasileirão da Série B de 2025.
